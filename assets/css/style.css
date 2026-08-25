@@ -922,14 +922,17 @@ a.deal-card {
 
 .deal-card {
   position: relative;
+  display: block;
   border-radius: var(--radius-md);
   overflow: hidden;
-  aspect-ratio: 3 / 4;
   box-shadow: var(--shadow-sm);
-  transition: box-shadow 0.5s ease;
+  transition:
+    transform 0.5s ease,
+    box-shadow 0.5s ease;
 }
 
 .deal-card:hover {
+  transform: translateY(-4px);
   box-shadow: var(--shadow-lg);
 }
 
@@ -939,16 +942,18 @@ a.deal-card {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  z-index: 0;
   transition: transform 0.6s ease;
 }
 
 .deal-card:hover .deal-card__image {
-  transform: scale(1.05);
+  transform: scale(1.035);
 }
 
 .deal-card__overlay {
   position: absolute;
   inset: 0;
+  z-index: 1;
   background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.1) 60%);
   display: flex;
   flex-direction: column;
@@ -962,13 +967,20 @@ a.deal-card {
 }
 
 .deal-card__result {
-  display: inline-block;
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  z-index: 2;
+  margin: 0;
+  padding: 0.4rem 0.85rem;
+  border-radius: var(--radius-sm);
+  background: var(--color-white);
+  color: var(--color-text);
+  box-shadow: var(--shadow-sm);
   font-size: 0.7rem;
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--color-accent);
-  margin-bottom: 0.5rem;
 }
 
 .deal-card__location {
@@ -982,6 +994,11 @@ a.deal-card {
 .deal-card__type {
   font-size: 0.85rem;
   color: rgba(255, 255, 255, 0.75);
+}
+
+.deal-card__sizer {
+  visibility: hidden;
+  pointer-events: none;
 }
 
 .property-card {
@@ -2424,7 +2441,8 @@ a.deal-card {
   transition-delay: 0s;
 }
 
-.listings-grid > .listing-card[data-animate].is-visible:hover {
+.listings-grid > .listing-card[data-animate].is-visible:hover,
+.deals-grid > .deal-card[data-animate].is-visible:hover {
   transform: translateY(-4px);
   box-shadow: var(--shadow-lg);
 }

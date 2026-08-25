@@ -108,7 +108,7 @@ const PROPERTIES_DATA = {
       priceFormatted: '3 890 000 Kč',
       area: 78,
       rooms: '3+1',
-      image: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&h=1000&fit=crop&q=80',
+      image: 'assets/images/property-1.jpg',
       description: 'Byt 3+1 v Praze s praktickou dispozicí a dobrou dostupností služeb. Prodej proběhl bez komplikací.',
       detailText: 'Klient ocenil rychlou komunikaci a profesionální přístup při celém prodeji. Nemovitost byla prezentována kvalitním marketingem a prodána v dohodnutém termínu.',
       highlights: [
@@ -132,7 +132,7 @@ const PROPERTIES_DATA = {
       area: 132,
       landArea: 850,
       rooms: '4+1',
-      image: 'https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=800&h=1000&fit=crop&q=80',
+      image: 'assets/images/property-2.jpg',
       description: 'Rodinný dům za Prahou s zahradou. Kompletní servis od odhadu po předání klíčů.',
       detailText: 'Prodej rodinného domu včetně právního servisu a komunikace s kupujícími. Důraz na férové jednání a transparentní průběh celého procesu.',
       highlights: [
@@ -155,7 +155,7 @@ const PROPERTIES_DATA = {
       priceFormatted: '2 150 000 Kč',
       area: 42,
       rooms: '1+kk',
-      image: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&h=1000&fit=crop&q=80',
+      image: 'assets/images/property-3.jpg',
       description: 'Kompaktní byt 1+kk v Karlíně. Rychlý prodej díky cílenému marketingu.',
       detailText: 'Menší byt vhodný pro jednotlivce nebo pár. Díky správné cenové strategii a prezentaci na realitních portálech byl prodej uzavřen do 28 dní.',
       highlights: [
@@ -179,7 +179,7 @@ const PROPERTIES_DATA = {
       area: 210,
       landArea: 1400,
       rooms: '6+1',
-      image: 'https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800&h=1000&fit=crop&q=80',
+      image: 'assets/images/property-4.jpg',
       description: 'Vila s bazénem a velkým pozemkem. Náročnější prodej s individuálním přístupem ke každému zájemci.',
       detailText: 'Prémiová nemovitost vyžadovala individuální marketing a pečlivý výběr kupujícího. Prodej zahrnoval osobní prohlídky, vyjednávání podmínek a kompletní právní servis.',
       highlights: [
@@ -202,7 +202,7 @@ const PROPERTIES_DATA = {
       priceFormatted: '1 650 000 Kč',
       area: 650,
       rooms: null,
-      image: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=800&h=1000&fit=crop&q=80',
+      image: 'assets/images/property-1.jpg',
       description: 'Stavební pozemek pro rodinný dům. Rychlý prodej investorovi.',
       detailText: 'Pozemek určený pro výstavbu rodinného domu. Prodej proběhl efektivně díky správnému zacílení na investory a stavebníky v regionu.',
       highlights: [
@@ -224,7 +224,7 @@ const PROPERTIES_DATA = {
       priceFormatted: '5 120 000 Kč',
       area: 95,
       rooms: '4+kk',
-      image: 'https://images.unsplash.com/photo-1600607687644-c7171b42498f?w=800&h=1000&fit=crop&q=80',
+      image: 'assets/images/property-2.jpg',
       description: 'Prostorný byt 4+kk v atraktivní lokalitě Vinohrad. Prodej za cenu převyšující očekávání klienta.',
       detailText: 'Byt v žádané lokalitě Vinohrad. Díky profesionální prezentaci a aktivnímu marketingu byl dosažen výsledek nad očekáváním majitele.',
       highlights: [

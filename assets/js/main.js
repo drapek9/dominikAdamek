@@ -213,14 +213,28 @@
       : 'nabidka.html?tab=prodano');
     const typeLabel = typeof TYPE_LABELS !== 'undefined' ? TYPE_LABELS[property.type] || property.type : property.type;
     const subtitle = property.rooms ? `${typeLabel} · ${property.rooms}` : typeLabel;
+    const meta = [];
+    if (property.rooms) meta.push(`<span>${property.rooms}</span>`);
+    if (property.area) meta.push(`<span>${property.area} m²</span>`);
 
     return `
       <a href="${href}" class="deal-card" data-animate aria-label="${property.location} – prodáno">
-        <img class="deal-card__image" src="${property.image}" alt="${property.location}" loading="lazy" width="500" height="650">
+        <img class="deal-card__image" src="${property.image}" alt="${property.location}" loading="lazy" width="600" height="450">
+        <span class="deal-card__result">Prodáno</span>
         <div class="deal-card__overlay">
-          <span class="deal-card__result">Prodáno</span>
           <h3 class="deal-card__location">${property.location}</h3>
           <p class="deal-card__type">${subtitle}</p>
+        </div>
+        <div class="deal-card__sizer" aria-hidden="true">
+          <div class="listing-card__image-wrap"></div>
+          <div class="listing-card__body">
+            <p class="listing-card__price">${property.priceFormatted}</p>
+            <p class="listing-card__location">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              ${property.location}
+            </p>
+            <div class="listing-card__meta">${meta.join('')}</div>
+          </div>
         </div>
       </a>
     `;

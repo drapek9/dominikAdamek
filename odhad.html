@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Odhad ceny nemovitosti zdarma Praha | Dominik Adámek</title>
+  <meta name="description" content="Zjistěte skutečnou tržní cenu vaší nemovitosti zdarma. Profesionální odhad od Dominika Adámka – přesnější než online kalkulačky, nezávazně, v Praze a okolí.">
+  <meta name="keywords" content="odhad ceny nemovitosti Praha, odhad nemovitosti zdarma Praha, ocenění nemovitosti Praha a okolí">
+  <link rel="canonical" href="odhad.html">
+  <meta property="og:title" content="Odhad ceny nemovitosti zdarma | Praha">
+  <meta property="og:description" content="Nevíte, kolik dnes stojí vaše nemovitost? Získejte nezávazný odhad zdarma během několika minut.">
+  <meta property="og:url" content="odhad.html">
+  <meta property="og:image" content="assets/images/agent.svg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Odhad nemovitosti zdarma Praha">
+  <meta name="twitter:description" content="Nezávazný odhad ceny nemovitosti od realitního makléře v Praze a okolí.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Service","name":"Odhad ceny nemovitosti zdarma","description":"Nezávazný odhad ceny nemovitosti v Praze a okolí","provider":{"@type":"RealEstateAgent","name":"Dominik Adámek","telephone":"+420604756495"},"areaServed":"Praha","offers":{"@type":"Offer","price":"0","priceCurrency":"CZK"}}
+  </script>
+</head>
+<body>
+  <header class="header">
+    <div class="container header__inner">
+      <a href="index.html" class="logo" aria-label="Dominik Adámek – domů">Dominik Adámek</a>
+      <nav class="header-nav" aria-label="Hlavní navigace">
+        <ul>
+          <li><a href="index.html">Domů</a></li>
+          <li><a href="o-mne.html">O mně</a></li>
+          <li><a href="nabidka.html">Nabídka</a></li>
+          <li><a href="sluzby.html">Služby</a></li>
+          <li><a href="kontakt.html">Kontakt</a></li>
+        </ul>
+      </nav>
+      <div class="header__actions">
+        <a href="tel:+420604756495" class="header__phone" aria-label="Zavolat na +420 604 756 495">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <span>604 756 495</span>
+        </a>
+        <button class="nav-toggle" aria-label="Otevřít menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+        <a href="odhad.html" class="btn btn--primary btn--sm header__cta">Odhad zdarma</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero hero--page" aria-labelledby="page-title">
+      <div class="container hero__content">
+        <span class="section__label">Nezávazný odhad zdarma</span>
+        <h1 id="page-title">Zjistěte skutečnou cenu vaší nemovitosti zdarma</h1>
+        <p class="hero__subtitle">Online kalkulačky vám ukážou průměr. Já vám ukážu reálnou tržní cenu – podle údajů z formuláře, s ohledem na lokalitu a aktuální poptávku. Bez závazků, bez skrytých poplatků.</p>
+      </div>
+    </section>
+
+    <section class="section" id="odhad-formular">
+      <div class="container">
+        <div class="estimate-form-wrap" data-animate>
+          <div class="estimate-wizard-panel" id="estimate-wizard">
+            <div class="estimate-wizard-stepper" role="presentation" aria-hidden="true">
+              <div class="estimate-wizard-stepper__track">
+                <div class="estimate-wizard-stepper__fill" id="estimate-progress-bar"></div>
+              </div>
+            </div>
+            <p class="estimate-wizard-feedback" id="estimate-feedback">Krok <strong>1</strong> ze 5</p>
+
+            <div class="estimate-wizard-steps">
+              <div class="estimate-wizard-step is-active">
+                <h3>Typ nemovitosti</h3>
+                <div class="estimate-choice-grid">
+                  <button type="button" class="estimate-choice-btn" data-estimate-choice="byt">Byt</button>
+                  <button type="button" class="estimate-choice-btn" data-estimate-choice="dům">Dům</button>
+                  <button type="button" class="estimate-choice-btn" data-estimate-choice="pozemek">Pozemek</button>
+                  <button type="button" class="estimate-choice-btn" data-estimate-choice="komerční prostor">Komerční prostor</button>
+                </div>
+              </div>
+
+              <div class="estimate-wizard-step">
+                <h3>Kde se nemovitost nachází?</h3>
+                <label class="visually-hidden" for="estimate-city">Město</label>
+                <input class="estimate-wizard-input" id="estimate-city" type="text" placeholder="Město" autocomplete="address-level2">
+                <label class="visually-hidden" for="estimate-street">Ulice</label>
+                <input class="estimate-wizard-input" id="estimate-street" type="text" placeholder="Ulice" autocomplete="street-address">
+                <div class="estimate-wizard-actions">
+                  <button type="button" class="btn btn--ghost" id="estimate-next-1">Pokračovat</button>
+                  <button type="button" class="btn btn--outline-dark estimate-wizard-back">Zpět</button>
+                </div>
+              </div>
+
+              <div class="estimate-wizard-step">
+                <h3>Jste vlastníkem nemovitosti?</h3>
+                <div class="estimate-wizard-radio-list">
+                  <label><input type="radio" name="estimate-owner-role" value="Ano"> Ano</label>
+                  <label><input type="radio" name="estimate-owner-role" value="Ne, zastupuji vlastníka"> Ne, zastupuji vlastníka</label>
+                  <label><input type="radio" name="estimate-owner-role" value="Spoluvlastník"> Spoluvlastník</label>
+                </div>
+                <div class="estimate-wizard-actions">
+                  <button type="button" class="btn btn--ghost" id="estimate-next-owner">Pokračovat</button>
+                  <button type="button" class="btn btn--outline-dark estimate-wizard-back">Zpět</button>
+                </div>
+              </div>
+
+              <div class="estimate-wizard-step">
+                <h3>Parametry nemovitosti</h3>
+                <label class="visually-hidden" for="estimate-disposition">Dispozice</label>
+                <select class="estimate-wizard-select" id="estimate-disposition">
+                  <option value="" disabled selected>Dispozice</option>
+                  <option value="1+kk">1+kk</option>
+                  <option value="1+1">1+1</option>
+                  <option value="2+kk">2+kk</option>
+                  <option value="2+1">2+1</option>
+                  <option value="3+kk">3+kk</option>
+                  <option value="3+1">3+1</option>
+                  <option value="4+kk">4+kk</option>
+                  <option value="4+1">4+1</option>
+                  <option value="5+kk">5+kk</option>
+                  <option value="5+1">5+1</option>
+                  <option value="Nevím">Nevím</option>
+                </select>
+                <label class="visually-hidden" for="estimate-area">Plocha v m²</label>
+                <input class="estimate-wizard-input" id="estimate-area" type="number" min="1" step="1" placeholder="Plocha (m²)" inputmode="numeric">
+                <p class="estimate-wizard-label">Druh vlastnictví</p>
+                <div class="estimate-wizard-radio-list">
+                  <label><input type="radio" name="estimate-ownership" value="Osobní vlastnictví"> Osobní vlastnictví</label>
+                  <label><input type="radio" name="estimate-ownership" value="Družstevní vlastnictví"> Družstevní vlastnictví</label>
+                  <label><input type="radio" name="estimate-ownership" value="Jiné"> Jiné</label>
+                  <label><input type="radio" name="estimate-ownership" value="Nevím"> Nevím</label>
+                </div>
+                <div class="estimate-wizard-actions">
+                  <button type="button" class="btn btn--ghost" id="estimate-next-2">Pokračovat</button>
+                  <button type="button" class="btn btn--outline-dark estimate-wizard-back">Zpět</button>
+                </div>
+              </div>
+
+              <div class="estimate-wizard-step">
+                <h3>Kontakt a zpráva</h3>
+                <label class="visually-hidden" for="estimate-name">Jméno a příjmení</label>
+                <input class="estimate-wizard-input" id="estimate-name" type="text" placeholder="Jméno a příjmení" autocomplete="name">
+                <label class="visually-hidden" for="estimate-email">E-mail</label>
+                <input class="estimate-wizard-input" id="estimate-email" type="email" placeholder="E-mail" autocomplete="email">
+                <label class="visually-hidden" for="estimate-phone">Telefon</label>
+                <input class="estimate-wizard-input" id="estimate-phone" type="tel" placeholder="Telefon" autocomplete="tel">
+                <label class="visually-hidden" for="estimate-message">Zpráva</label>
+                <textarea class="estimate-wizard-input estimate-wizard-input--textarea" id="estimate-message" rows="4" placeholder="Zpráva (volitelné)"></textarea>
+                <label class="estimate-wizard-consent">
+                  <input type="checkbox" id="estimate-consent">
+                  <span>Souhlasím se zpracováním osobních údajů za účelem nezávazného odhadu nemovitosti.</span>
+                </label>
+                <div class="estimate-wizard-actions">
+                  <button type="button" class="btn btn--primary" id="estimate-submit">Odeslat nezávazně</button>
+                  <button type="button" class="btn btn--ghost estimate-wizard-back">Zpět</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-success estimate-wizard-success" hidden role="alert">
+            Děkuji! Brzy vás budu kontaktovat s odhadem ceny vaší nemovitosti.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--alt" aria-labelledby="estimate-compare">
+      <div class="container">
+        <div class="section__header" data-animate>
+          <h2 id="estimate-compare">Profesionální odhad vs. online kalkulačka</h2>
+        </div>
+        <div class="compare-grid">
+          <div class="compare-box compare-box--negative" data-animate>
+            <h3>Online kalkulačka</h3>
+            <ul class="compare-list">
+              <li><span class="compare-list__icon compare-list__icon--negative" aria-hidden="true">✕</span> Průměrná data bez kontextu</li>
+              <li><span class="compare-list__icon compare-list__icon--negative" aria-hidden="true">✕</span> Nezná stav nemovitosti</li>
+              <li><span class="compare-list__icon compare-list__icon--negative" aria-hidden="true">✕</span> Často chyba 10–20 %</li>
+              <li><span class="compare-list__icon compare-list__icon--negative" aria-hidden="true">✕</span> Žádná konzultace s makléřem</li>
+            </ul>
+          </div>
+          <div class="compare-box compare-box--positive" data-animate>
+            <h3>Profesionální odhad od Dominika Adámka</h3>
+            <ul class="compare-list">
+              <li><span class="compare-list__icon compare-list__icon--positive" aria-hidden="true">✓</span> Bez nutnosti návštěvy u vás</li>
+              <li><span class="compare-list__icon compare-list__icon--positive" aria-hidden="true">✓</span> Zohlednění údajů, stavu a specifik z formuláře</li>
+              <li><span class="compare-list__icon compare-list__icon--positive" aria-hidden="true">✓</span> Aktuální tržní data z lokality</li>
+              <li><span class="compare-list__icon compare-list__icon--positive" aria-hidden="true">✓</span> Možnost dotazů a konzultace</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="estimate-faq">
+      <div class="container">
+        <div class="section__header" data-animate>
+          <h2 id="estimate-faq">Časté dotazy k odhadu nemovitosti</h2>
+        </div>
+        <div class="faq-list" data-animate>
+          <div class="faq-item">
+            <button type="button" class="faq-question">Je odhad opravdu zdarma a nezávazný?</button>
+            <div class="faq-answer">
+              <p>Ano. Odhad ceny je zcela zdarma a nezávazný. Nemusíte se rozhodnout pro spolupráci – získáte jen užitečné informace o tržní ceně vaší nemovitosti.</p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button type="button" class="faq-question">Jak dlouho trvá nacenění?</button>
+            <div class="faq-answer">
+              <p>Po odeslání formuláře odhad připravím na základě vašich údajů a znalosti trhu. Obvykle vám ho zašlu do několika pracovních dnů – přesný termín vždy upřesním po domluvě.</p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button type="button" class="faq-question">Proč nestačí online kalkulačka?</button>
+            <div class="faq-answer">
+              <p>Online kalkulačky pracují s průměrnými daty a nevidí stav ani specifika vaší nemovitosti. Často ukazují cenu o 10–20 % od reality.</p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button type="button" class="faq-question">Co se stane po odeslání formuláře?</button>
+            <div class="faq-answer">
+              <p>Ozvu se vám, případně si upřesníme údaje o nemovitosti. Poté odhad připravím a zašlu vám ho zdarma a nezávazně. Žádný spam.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section home-cta" aria-labelledby="odhad-cta">
+      <div class="container">
+        <div class="home-cta__inner" data-animate>
+          <span class="section__label">Kontakt</span>
+          <h2 id="odhad-cta">Raději telefonicky?</h2>
+          <p class="home-cta__desc">Zavolejte mi a odhad probereme osobně. Jsem k dispozici každý pracovní den.</p>
+          <div class="home-cta__actions">
+            <a href="tel:+420604756495" class="btn btn--primary btn--lg">+420 604 756 495</a>
+            <a href="kontakt.html" class="btn btn--outline-dark btn--lg">Kontaktní formulář</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <a href="index.html" class="logo">Dominik Adámek</a><span class="logo__tagline">Realitní makléř · Praha a okolí</span>
+          <p>Odhad ceny nemovitosti zdarma v Praze a okolí.</p>
+        </div>
+        <div><h4>Navigace</h4><ul><li><a href="sluzby.html">Služby</a></li><li><a href="o-mne.html">O mně</a></li></ul></div>
+        <div><h4>Služby</h4><ul><li><a href="odhad.html">Odhad zdarma</a></li><li><a href="sluzby.html">Prodej nemovitostí</a></li></ul></div>
+        <div><h4>Kontakt</h4><ul><li><a href="tel:+420604756495">+420 604 756 495</a></li></ul></div>
+      </div>
+      <div class="footer__bottom"><p>&copy; 2026 Dominik Adámek · IČ 09735984</p></div>
+      <p class="footer__credit">Web vytvořil <a href="https://simondrapal.cz/" target="_blank" rel="noopener noreferrer">Šimon Drápal</a></p>
+    </div>
+  </footer>
+  <script src="assets/js/main.js" defer></script>
+</body>
+</html>

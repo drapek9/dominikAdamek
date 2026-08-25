@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nabídka nemovitostí | Dominik Adámek – Praha a okolí</title>
+  <meta name="description" content="Aktuální nabídka nemovitostí v Praze a okolí i úspěšně prodané zakázky. Byty, domy, pozemky a komerční objekty.">
+  <link rel="canonical" href="nabidka.html">
+  <meta property="og:title" content="Nabídka nemovitostí | Dominik Adámek Praha">
+  <meta property="og:description" content="Prohlédněte si aktuální nabídku bytů, domů a pozemků v Praze a okolí.">
+  <meta property="og:url" content="nabidka.html">
+  <meta property="og:image" content="assets/images/property-1.svg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Nabídka nemovitostí Praha">
+  <meta name="twitter:description" content="Byty, domy, pozemky v Praze a okolí. Dominik Adámek.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"RealEstateAgent","name":"Dominik Adámek","url":"nabidka.html","telephone":"+420604756495"}
+  </script>
+</head>
+<body>
+  <header class="header">
+    <div class="container header__inner">
+      <a href="index.html" class="logo" aria-label="Dominik Adámek – domů">Dominik Adámek</a>
+      <nav class="header-nav" aria-label="Hlavní navigace">
+        <ul>
+          <li><a href="index.html">Domů</a></li>
+          <li><a href="o-mne.html">O mně</a></li>
+          <li><a href="nabidka.html">Nabídka</a></li>
+          <li><a href="sluzby.html">Služby</a></li>
+          <li><a href="kontakt.html">Kontakt</a></li>
+        </ul>
+      </nav>
+      <div class="header__actions">
+        <a href="tel:+420604756495" class="header__phone" aria-label="Zavolat na +420 604 756 495">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <span>604 756 495</span>
+        </a>
+        <button class="nav-toggle" aria-label="Otevřít menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+        <a href="odhad.html" class="btn btn--primary btn--sm header__cta">Odhad zdarma</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero hero--page" aria-labelledby="page-title">
+      <div class="container hero__content">
+        <h1 id="page-title">Nemovitosti v Praze a okolí</h1>
+        <p class="hero__subtitle">Aktuální nabídka k prodeji i úspěšně realizované zakázky.</p>
+      </div>
+    </section>
+
+    <section class="section" id="nabidka">
+      <div class="container">
+        <div class="property-view-tabs" role="tablist" aria-label="Výběr nabídky" data-animate>
+          <button class="property-view-tab is-active" type="button" data-property-view="nabidka" role="tab" aria-selected="true" aria-controls="panel-nabidka" id="tab-nabidka">Aktuální nabídka</button>
+          <button class="property-view-tab" type="button" data-property-view="prodano" role="tab" aria-selected="false" aria-controls="panel-prodano" id="tab-prodano">Prodáno</button>
+        </div>
+
+        <div class="property-panel property-panel--active" id="panel-nabidka" role="tabpanel" aria-labelledby="tab-nabidka">
+          <div class="listings-grid" id="property-listing" aria-live="polite"></div>
+        </div>
+
+        <div class="property-panel" id="panel-prodano" role="tabpanel" aria-labelledby="tab-prodano" hidden>
+          <div class="deals-grid" id="sold-gallery" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <a href="index.html" class="logo">Dominik Adámek</a><span class="logo__tagline">Realitní makléř · Praha a okolí</span>
+          <p>Realitní makléř v Praze a okolí.</p>
+        </div>
+        <div><h4>Navigace</h4><ul><li><a href="o-mne.html">O mně</a></li><li><a href="nabidka.html">Nabídka</a></li><li><a href="sluzby.html">Služby</a></li></ul></div>
+        <div><h4>Služby</h4><ul><li><a href="odhad.html">Odhad zdarma</a></li><li><a href="sluzby.html">Prodej nemovitostí</a></li></ul></div>
+        <div><h4>Kontakt</h4><ul><li><a href="tel:+420604756495">+420 604 756 495</a></li></ul></div>
+      </div>
+      <div class="footer__bottom"><p>&copy; 2026 Dominik Adámek</p></div>
+      <p class="footer__credit">Web vytvořil <a href="https://simondrapal.cz/" target="_blank" rel="noopener noreferrer">Šimon Drápal</a></p>
+    </div>
+  </footer>
+  <script src="assets/js/properties-data.js" defer></script>
+  <script src="assets/js/main.js" defer></script>
+</body>
+</html>

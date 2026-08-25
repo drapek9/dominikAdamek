@@ -1,0 +1,7 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='800' height='560' viewBox='0 0 800 560'>
+  <rect width='800' height='560' fill='#c5d4eb'/>
+  <rect x='60' y='200' width='300' height='220' rx='8' fill='rgba(255,255,255,0.12)'/>
+  <rect x='400' y='160' width='340' height='280' rx='8' fill='rgba(255,255,255,0.08)'/>
+  <rect x='60' y='440' width='680' height='8' rx='4' fill='rgba(255,255,255,0.15)'/>
+  <text x='400' y='100' text-anchor='middle' fill='rgba(255,255,255,0.4)' font-family='system-ui' font-size='22' font-weight='600'>Nemovitost 2</text>
+</svg>

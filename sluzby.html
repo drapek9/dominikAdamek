@@ -50,12 +50,115 @@
   <main>
     <section class="hero hero--page" aria-labelledby="page-title">
       <div class="container hero__content">
-        <h1 id="page-title">Realitní služby v Praze a okolí</h1>
-        <p class="hero__subtitle">Od první konzultace až po předání klíčů. Vše pod jednou střechou s osobním přístupem.</p>
+        <span class="section__label">Přehled</span>
+        <h1 id="page-title">S čím Vám mohu pomoci</h1>
+        <p class="hero__subtitle">Kompletní realitní servis v Praze a okolí. Vyberte si, s čím začneme – zbytek zařídím já.</p>
       </div>
     </section>
 
-    <div class="page-placeholder" aria-hidden="true"></div>
+    <section class="section section--alt" aria-label="Nabídka služeb">
+      <div class="container">
+        <div class="services-grid">
+          <article class="service-card" id="prodej" data-animate>
+            <div class="service-card__icon" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            </div>
+            <h3>Prodej nemovitosti</h3>
+            <p>Od první konzultace až po předání klíčů. Postarám se o cenu, prezentaci, prohlídky i vyjednávání, abyste z prodeje dostali maximum.</p>
+            <ul class="service-card__benefits">
+              <li>Strategie prodeje a reálná tržní cena</li>
+              <li>Příprava nemovitosti a profesionální prezentace</li>
+              <li>Prohlídky, výběr zájemců a vyjednání podmínek</li>
+              <li>Kompletní dotažení až k podpisu a předání</li>
+            </ul>
+          </article>
+
+          <article class="service-card" id="odhad" data-animate>
+            <div class="service-card__icon" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            </div>
+            <h3>Odhad ceny nemovitosti</h3>
+            <p>Nezávazný odhad zdarma podle aktuální situace na trhu v Praze a okolí. Bez závazku a bez obcházení s kalkulačkou.</p>
+            <ul class="service-card__benefits">
+              <li>Orientační tržní cena zdarma</li>
+              <li>Zohlednění lokality, stavu i dispozice</li>
+              <li>Srozumitelné vysvětlení, z čeho číslo vychází</li>
+              <li>Možnost navázat na prodej, až budete chtít</li>
+            </ul>
+          </article>
+
+          <article class="service-card" id="koupe" data-animate>
+            <div class="service-card__icon" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </div>
+            <h3>Koupě nemovitosti</h3>
+            <p>Pomohu vám najít byt nebo dům, který dává smysl, a provedu vás koupí od prohlídky až po převod vlastnictví.</p>
+            <ul class="service-card__benefits">
+              <li>Výběr nemovitosti podle vašich požadavků</li>
+              <li>Ověření stavu, lokality i reálné ceny</li>
+              <li>Jednání s prodávajícím a příprava koupě</li>
+              <li>Doprovod až do katastru</li>
+            </ul>
+          </article>
+
+          <article class="service-card" id="home-staging" data-animate>
+            <div class="service-card__icon" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+            </div>
+            <h3>Home staging a příprava</h3>
+            <p>Nemovitost ukážeme v tom nejlepším světle – úpravy, styling a fotografie, které z nabídky udělají něco, u čeho se lidé zastaví.</p>
+            <ul class="service-card__benefits">
+              <li>Doporučení drobných úprav před focením</li>
+              <li>Home staging interiéru</li>
+              <li>Profesionální fotografie a prezentace</li>
+              <li>Příprava textů a podkladů k inzerci</li>
+            </ul>
+          </article>
+
+          <article class="service-card" id="marketing" data-animate>
+            <div class="service-card__icon" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+            </div>
+            <h3>Marketing nemovitosti</h3>
+            <p>Nabídku dostanu k lidem, kteří se skutečně dívají. Portály, sociální sítě i cílená prezentace, ne jen vyvěšení inzerátu.</p>
+            <ul class="service-card__benefits">
+              <li>Inzerce na hlavních realitních portálech</li>
+              <li>Prezentace na sociálních sítích</li>
+              <li>Oslovení relevantních zájemců</li>
+              <li>Průběžné vyhodnocení a úprava nabídky</li>
+            </ul>
+          </article>
+
+          <article class="service-card" id="pravni-servis" data-animate>
+            <div class="service-card__icon" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            </div>
+            <h3>Právní servis</h3>
+            <p>Smlouvy, úschova peněz i převod vlastnických práv. Právní část prodeje nebo koupě zařídím tak, abyste z toho neměli starost.</p>
+            <ul class="service-card__benefits">
+              <li>Příprava a kontrola smluv</li>
+              <li>Úschova kupní ceny</li>
+              <li>Převod vlastnictví na katastru</li>
+              <li>Srozumitelný postup bez překvapení</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section home-cta" aria-labelledby="sluzby-cta">
+      <div class="container">
+        <div class="home-cta__inner" data-animate>
+          <span class="section__label">Spolupráce</span>
+          <h2 id="sluzby-cta">Nejste si jistí, kde začít?</h2>
+          <p class="home-cta__desc">Ozvěte se. Probereme, jestli dává větší smysl odhad, prodej, nebo jen krátká konzultace. Bez závazku.</p>
+          <div class="home-cta__actions">
+            <a href="odhad.html" class="btn btn--primary btn--lg">Chci odhad zdarma</a>
+            <a href="kontakt.html" class="btn btn--outline-dark btn--lg">Kontaktovat makléře</a>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
 
   <footer class="footer">
@@ -65,8 +168,8 @@
           <a href="index.html" class="logo">Dominik Adámek</a><span class="logo__tagline">Realitní makléř · Praha a okolí</span>
           <p>Realitní makléř v Praze a okolí.</p>
         </div>
-        <div><h4>Navigace</h4><ul><li><a href="sluzby.html">Služby</a></li><li><a href="nabidka.html">Nabídka</a></li></ul></div>
-        <div><h4>Služby</h4><ul><li><a href="odhad.html">Odhad zdarma</a></li><li><a href="sluzby.html">Prodej nemovitostí</a></li></ul></div>
+        <div><h4>Navigace</h4><ul><li><a href="o-mne.html">O mně</a></li><li><a href="nabidka.html">Nabídka</a></li><li><a href="sluzby.html">Služby</a></li></ul></div>
+        <div><h4>Služby</h4><ul><li><a href="odhad.html">Odhad zdarma</a></li><li><a href="sluzby.html#prodej">Prodej nemovitostí</a></li><li><a href="kontakt.html">Konzultace</a></li></ul></div>
         <div><h4>Kontakt</h4><ul><li><a href="tel:+420604756495">+420 604 756 495</a></li><li><a href="mailto:dominik.adamek@century21.cz">dominik.adamek@century21.cz</a></li></ul></div>
       </div>
       <div class="footer__bottom"><p>&copy; 2026 Dominik Adámek</p></div>

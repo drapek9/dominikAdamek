@@ -33,7 +33,9 @@
   navLinks.forEach((link) => link.addEventListener('click', closeMenu));
 
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') closeMenu();
+    if (e.key === 'Escape' && !document.body.classList.contains('service-modal-open')) {
+      closeMenu();
+    }
   });
 
   window.addEventListener('scroll', () => {
@@ -42,12 +44,86 @@
     }
   }, { passive: true });
 
-  const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+  function pageFileName(pathname) {
+    const name = String(pathname || '').split('/').pop();
+    return name === '' ? 'index.html' : name;
+  }
+
+  const currentPage = pageFileName(window.location.pathname);
   navLinks.forEach((link) => {
     const href = link.getAttribute('href');
     if (href === currentPage || (currentPage === '' && href === 'index.html')) {
       link.classList.add('is-active');
     }
+  });
+
+  function prefersReducedMotion() {
+    return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  }
+
+  function scrollPageTo(top) {
+    window.scrollTo({
+      top: Math.max(0, top),
+      behavior: prefersReducedMotion() ? 'auto' : 'smooth'
+    });
+  }
+
+  function isModifiedClick(event) {
+    return event.defaultPrevented
+      || event.button !== 0
+      || event.metaKey
+      || event.ctrlKey
+      || event.shiftKey
+      || event.altKey;
+  }
+
+  function resolveSamePageUrl(anchor) {
+    if (!anchor || anchor.target === '_blank' || anchor.hasAttribute('download')) return null;
+
+    const href = anchor.getAttribute('href');
+    if (!href || /^(mailto:|tel:|javascript:)/i.test(href)) return null;
+
+    let url;
+    try {
+      url = new URL(href, window.location.href);
+    } catch {
+      return null;
+    }
+
+    if (url.origin !== window.location.origin) return null;
+    if (pageFileName(url.pathname) !== currentPage) return null;
+    if (url.search !== window.location.search) return null;
+    return url;
+  }
+
+  document.addEventListener('click', (event) => {
+    const anchor = event.target.closest('a[href]');
+    if (!anchor || isModifiedClick(event)) return;
+
+    const url = resolveSamePageUrl(anchor);
+    if (!url) return;
+
+    event.preventDefault();
+    closeMenu();
+
+    if (url.hash && url.hash !== '#') {
+      const target = document.querySelector(url.hash);
+      if (window.location.hash !== url.hash) {
+        window.location.hash = url.hash;
+      }
+      if (target) {
+        const offset = header ? header.offsetHeight + 16 : 80;
+        scrollPageTo(target.getBoundingClientRect().top + window.scrollY - offset);
+      }
+      return;
+    }
+
+    if (window.location.hash) {
+      history.replaceState(null, '', window.location.pathname + window.location.search);
+      window.dispatchEvent(new HashChangeEvent('hashchange'));
+    }
+
+    scrollPageTo(0);
   });
 
   /* ── Scroll animations ── */
@@ -240,6 +316,53 @@
     `;
   }
 
+  function initPropertyCarousel(track) {
+    const root = track.closest('[data-carousel]');
+    if (!root) return;
+
+    const slides = [...track.children].filter((el) => el.matches('a.listing-card, a.deal-card'));
+    slides.forEach((slide) => slide.classList.add('is-visible'));
+    if (slides.length < 2) return;
+
+    const prev = root.querySelector('[data-carousel-prev]');
+    const next = root.querySelector('[data-carousel-next]');
+    const mq = window.matchMedia('(max-width: 768px)');
+    let index = 0;
+
+    root.classList.add('is-carousel');
+
+    function render() {
+      const mobile = mq.matches;
+      track.style.transform = mobile ? `translate3d(-${index * 100}%, 0, 0)` : '';
+      slides.forEach((slide, i) => {
+        const active = !mobile || i === index;
+        slide.toggleAttribute('inert', !active);
+        if (mobile) {
+          slide.setAttribute('aria-hidden', active ? 'false' : 'true');
+          if (active) slide.removeAttribute('tabindex');
+          else slide.setAttribute('tabindex', '-1');
+        } else {
+          slide.removeAttribute('aria-hidden');
+          slide.removeAttribute('tabindex');
+        }
+      });
+    }
+
+    function goTo(nextIndex) {
+      index = (nextIndex + slides.length) % slides.length;
+      render();
+    }
+
+    prev?.addEventListener('click', () => goTo(index - 1));
+    next?.addEventListener('click', () => goTo(index + 1));
+    if (typeof mq.addEventListener === 'function') {
+      mq.addEventListener('change', render);
+    } else if (typeof mq.addListener === 'function') {
+      mq.addListener(render);
+    }
+    render();
+  }
+
   /* Homepage – featured properties */
   const featuredContainer = document.getElementById('featured-properties');
   if (featuredContainer && typeof PROPERTIES_DATA !== 'undefined') {
@@ -248,19 +371,7 @@
     featuredContainer.innerHTML = featured.length
       ? featured.map((p) => createListingCard(p)).join('')
       : '<p class="listing-empty">Momentálně nemáme aktivní nabídku.</p>';
-    featuredContainer.querySelectorAll('[data-animate]').forEach((el) => {
-      if ('IntersectionObserver' in window) {
-        const obs = new IntersectionObserver((entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add('is-visible');
-              obs.unobserve(entry.target);
-            }
-          });
-        }, { threshold: 0.12 });
-        obs.observe(el);
-      }
-    });
+    initPropertyCarousel(featuredContainer);
   }
 
   /* Homepage – sold preview */
@@ -270,19 +381,7 @@
     soldPreview.innerHTML = PROPERTIES_DATA.sold.slice(0, limit).map((p) =>
       createDealCard(p)
     ).join('');
-    soldPreview.querySelectorAll('[data-animate]').forEach((el) => {
-      if ('IntersectionObserver' in window) {
-        const obs = new IntersectionObserver((entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add('is-visible');
-              obs.unobserve(entry.target);
-            }
-          });
-        }, { threshold: 0.12 });
-        obs.observe(el);
-      }
-    });
+    initPropertyCarousel(soldPreview);
   }
 
   /* Nabídka – view switch */
@@ -496,6 +595,228 @@
   }
 
   initEstimateWizard();
+
+  /* ── Service detail modal ── */
+  const SERVICE_DETAILS = {
+    prodej: {
+      title: 'Prodej nemovitosti',
+      paragraphs: [
+        'Prodej nemovitosti není jen o vyvěšení inzerátu. Připravím strategii, nastavím reálnou cenu podle trhu a postarám se, aby vaše nemovitost zaujala správné zájemce.',
+        'Od první konzultace vás provedu celým procesem – příprava, prezentace, prohlídky, výběr kupujícího, vyjednání podmínek i dotažení až k podpisu a předání klíčů. Cílem je maximální cena při férovém a přehledném průběhu.'
+      ],
+      benefits: [
+        'Strategie prodeje a reálná tržní cena',
+        'Příprava nemovitosti a profesionální prezentace',
+        'Prohlídky, výběr zájemců a vyjednání podmínek',
+        'Kompletní dotažení až k podpisu a předání'
+      ]
+    },
+    odhad: {
+      title: 'Odhad ceny nemovitosti',
+      paragraphs: [
+        'Než se rozhodnete prodat, potřebujete vědět, za kolik má nemovitost reálnou šanci jít. Připravím nezávazný odhad zdarma na základě lokality, stavu, dispozice a aktuálních prodejů v okolí.',
+        'Číslo vám srozumitelně vysvětlím – odkud vychází a co by cenu mohlo posunout nahoru nebo dolů. Bez závazku a bez tlaku. Pokud budete chtít pokračovat k prodeji, navážeme plynule.'
+      ],
+      benefits: [
+        'Orientační tržní cena zdarma',
+        'Zohlednění lokality, stavu i dispozice',
+        'Srozumitelné vysvětlení, z čeho číslo vychází',
+        'Možnost navázat na prodej, až budete chtít'
+      ]
+    },
+    koupe: {
+      title: 'Koupě nemovitosti',
+      paragraphs: [
+        'Hledání nemovitosti umí být únavné. Pomohu vám zúžit výběr podle lokality, rozpočtu a toho, jak chcete bydlet. U vybraných nabídek ověřím stav, cenu i rizika, abyste nekupovali naslepo.',
+        'Následně vás provedu jednáním, přípravou koupě i převodem vlastnictví. Budu ten, kdo hlídá termíny, dokumenty a férovost podmínek.'
+      ],
+      benefits: [
+        'Výběr nemovitosti podle vašich požadavků',
+        'Ověření stavu, lokality i reálné ceny',
+        'Jednání s prodávajícím a příprava koupě',
+        'Doprovod až do katastru'
+      ]
+    },
+    'home-staging': {
+      title: 'Home staging a příprava',
+      paragraphs: [
+        'První dojem rozhoduje. Před focením doporučím drobné úpravy, pomohu s úklidem prostoru a home stagingem, aby interiér působil světle, prostorně a přívětivě.',
+        'Profesionální fotografie a srozumitelný popis pak z nabídky udělají něco, u čeho se lidé zastaví. Dobře připravená nemovitost se prohlíží rychleji a často se prodá výhodněji.'
+      ],
+      benefits: [
+        'Doporučení drobných úprav před focením',
+        'Home staging interiéru',
+        'Profesionální fotografie a prezentace',
+        'Příprava textů a podkladů k inzerci'
+      ]
+    },
+    marketing: {
+      title: 'Marketing nemovitosti',
+      paragraphs: [
+        'Inzerát na jednom portálu dnes nestačí. Připravím prezentaci, která nemovitost odliší, a dostanu ji na hlavní realitní weby, sociální sítě i k lidem, kteří v dané lokalitě aktivně hledají.',
+        'Průběžně sleduji, jak nabídka funguje, a upravím cenu, text nebo vizuály, pokud je potřeba. Cílem není jen viditelnost, ale relevantní zájemci.'
+      ],
+      benefits: [
+        'Inzerce na hlavních realitních portálech',
+        'Prezentace na sociálních sítích',
+        'Oslovení relevantních zájemců',
+        'Průběžné vyhodnocení a úprava nabídky'
+      ]
+    },
+    'pravni-servis': {
+      title: 'Právní servis',
+      paragraphs: [
+        'Právní část prodeje nebo koupě nemusí být stresující. Zajistím přípravu a kontrolu smluv, úschovu kupní ceny i převod vlastnictví na katastru.',
+        'Celý postup vám vysvětlím srozumitelně a včas, abyste věděli, co se děje a co od vás bude potřeba. Vy se soustředíte na stěhování, já na papíry.'
+      ],
+      benefits: [
+        'Příprava a kontrola smluv',
+        'Úschova kupní ceny',
+        'Převod vlastnictví na katastru',
+        'Srozumitelný postup bez překvapení'
+      ]
+    }
+  };
+
+  function escapeServiceHtml(text) {
+    return String(text)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  function initServiceDetails() {
+    const cards = document.querySelectorAll('[data-service]');
+    if (!cards.length) return;
+
+    const modal = document.createElement('div');
+    modal.className = 'service-modal';
+    modal.innerHTML = `
+      <div class="service-modal__backdrop" data-service-close></div>
+      <div class="service-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="service-modal-title" tabindex="-1">
+        <button type="button" class="service-modal__close" data-service-close aria-label="Zavřít detail služby">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+        <div class="service-modal__icon" aria-hidden="true"></div>
+        <h2 class="service-modal__title" id="service-modal-title"></h2>
+        <div class="service-modal__body"></div>
+      </div>
+    `;
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.appendChild(modal);
+
+    const dialog = modal.querySelector('.service-modal__dialog');
+    const iconEl = modal.querySelector('.service-modal__icon');
+    const titleEl = modal.querySelector('.service-modal__title');
+    const bodyEl = modal.querySelector('.service-modal__body');
+    let lastTrigger = null;
+    let openId = '';
+
+    function getFocusable() {
+      return [...dialog.querySelectorAll('a[href], button:not([disabled])')];
+    }
+
+    function setServiceHash(id) {
+      if (id) {
+        if (!document.getElementById(id)) return;
+        if (window.location.hash !== `#${id}`) {
+          history.replaceState(null, '', `#${id}`);
+        }
+        return;
+      }
+      const current = window.location.hash.replace('#', '');
+      if (current && SERVICE_DETAILS[current]) {
+        history.replaceState(null, '', window.location.pathname + window.location.search);
+      }
+    }
+
+    function closeServiceModal(clearHash = true) {
+      if (!modal.classList.contains('is-open')) return;
+      modal.classList.remove('is-open');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('service-modal-open');
+      openId = '';
+      if (clearHash) setServiceHash('');
+      lastTrigger?.focus();
+    }
+
+    function openServiceModal(id, trigger) {
+      const data = SERVICE_DETAILS[id];
+      if (!data) return;
+
+      lastTrigger = trigger || document.querySelector(`[data-service="${id}"]`);
+      openId = id;
+
+      const triggerIcon = lastTrigger?.querySelector('.service-card__icon');
+      iconEl.innerHTML = triggerIcon ? triggerIcon.innerHTML : '';
+      titleEl.textContent = data.title;
+      bodyEl.innerHTML = `
+        ${data.paragraphs.map((p) => `<p>${escapeServiceHtml(p)}</p>`).join('')}
+        <ul class="service-modal__benefits">
+          ${data.benefits.map((item) => `<li>${escapeServiceHtml(item)}</li>`).join('')}
+        </ul>
+      `;
+
+      modal.classList.add('is-open');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('service-modal-open');
+      closeMenu();
+      setServiceHash(id);
+      dialog.focus();
+    }
+
+    cards.forEach((card) => {
+      card.addEventListener('click', () => {
+        openServiceModal(card.getAttribute('data-service'), card);
+      });
+    });
+
+    modal.addEventListener('click', (e) => {
+      if (e.target.closest('[data-service-close]')) {
+        closeServiceModal();
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (!modal.classList.contains('is-open')) return;
+
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        closeServiceModal();
+        return;
+      }
+
+      if (e.key !== 'Tab') return;
+      const focusable = getFocusable();
+      if (!focusable.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    });
+
+    window.addEventListener('hashchange', () => {
+      const id = window.location.hash.replace('#', '');
+      if (SERVICE_DETAILS[id]) {
+        openServiceModal(id);
+      } else {
+        closeServiceModal(false);
+      }
+    });
+
+    const initialId = window.location.hash.replace('#', '');
+    if (SERVICE_DETAILS[initialId]) {
+      openServiceModal(initialId);
+    }
+  }
+
+  initServiceDetails();
 
   /* FAQ accordion */
   document.querySelectorAll('.faq-item').forEach((item) => {

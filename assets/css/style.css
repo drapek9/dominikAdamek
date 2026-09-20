@@ -827,6 +827,77 @@ body.nav-open { overflow: hidden; }
   margin-top: 2.5rem;
 }
 
+.property-carousel__nav {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .property-carousel.is-carousel {
+    display: grid;
+    grid-template-columns: 2.375rem minmax(0, 1fr) 2.375rem;
+    align-items: center;
+    gap: 0.2rem;
+    margin-inline: -0.75rem;
+  }
+
+  .property-carousel.is-carousel .property-carousel__nav {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.375rem;
+    height: 2.375rem;
+    padding: 0;
+    border-radius: 50%;
+    border: 1px solid var(--color-border);
+    background: var(--color-white);
+    color: var(--color-primary);
+    cursor: pointer;
+    flex-shrink: 0;
+    appearance: none;
+    box-shadow: var(--shadow-sm);
+    transition: background var(--transition), border-color var(--transition), color var(--transition);
+  }
+
+  .property-carousel.is-carousel .property-carousel__nav svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .property-carousel.is-carousel .property-carousel__nav:hover,
+  .property-carousel.is-carousel .property-carousel__nav:focus-visible {
+    border-color: var(--color-primary);
+    background: var(--color-primary-soft);
+    color: var(--color-primary);
+    opacity: 1;
+  }
+
+  .property-carousel__viewport {
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  .property-carousel.is-carousel .listings-grid,
+  .property-carousel.is-carousel .deals-grid {
+    display: flex;
+    gap: 0;
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .property-carousel.is-carousel .listings-grid > *,
+  .property-carousel.is-carousel .deals-grid > * {
+    flex: 0 0 100%;
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 768px) and (prefers-reduced-motion: reduce) {
+  .property-carousel.is-carousel .listings-grid,
+  .property-carousel.is-carousel .deals-grid {
+    transition: none;
+  }
+}
+
 a.listing-card,
 a.deal-card {
   display: block;
@@ -1362,13 +1433,35 @@ a.deal-card {
   border-radius: var(--radius-lg);
   padding: 2rem;
   border: 1px solid var(--color-border);
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  appearance: none;
+  -webkit-appearance: none;
+  white-space: normal;
+  line-height: inherit;
   transition:
     box-shadow 0.45s cubic-bezier(0.22, 1, 0.36, 1),
-    border-color 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    border-color 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.service-card[data-service] {
+  cursor: pointer;
+}
+
+.service-card[data-service]:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 3px;
 }
 
 .service-card--preview {
   text-align: center;
+  align-items: center;
   padding: 2rem 1.5rem;
   transition:
     box-shadow 0.45s cubic-bezier(0.22, 1, 0.36, 1),
@@ -1417,7 +1510,7 @@ a.deal-card {
 .service-card p {
   color: var(--color-text-muted);
   font-size: 0.9375rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0;
 }
 
 .service-card__benefits {
@@ -1442,6 +1535,178 @@ a.deal-card {
   left: 0;
   color: var(--color-success);
   font-weight: 700;
+}
+
+.service-card__more {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: auto;
+  padding-top: 1rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+.service-card__more::after {
+  content: '→';
+  transition: transform 0.3s ease;
+}
+
+.service-card[data-service]:hover .service-card__more::after {
+  transform: translateX(4px);
+}
+
+body.service-modal-open { overflow: hidden; }
+
+body.service-modal-open .header,
+body.service-modal-open .header-nav,
+body.service-modal-open .nav-toggle {
+  pointer-events: none;
+}
+
+body.service-modal-open .header {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.service-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 4000;
+  isolation: isolate;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 1rem;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.service-modal.is-open {
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.service-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(26, 35, 50, 0.55);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.service-modal.is-open .service-modal__backdrop {
+  opacity: 1;
+}
+
+.service-modal__dialog {
+  position: relative;
+  width: min(100%, 640px);
+  max-height: min(88vh, 760px);
+  overflow: auto;
+  background: var(--color-white);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  padding: 1.75rem 1.5rem 1.5rem;
+  transform: translateY(24px);
+  opacity: 0;
+  transition:
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.3s ease;
+}
+
+.service-modal.is-open .service-modal__dialog {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.service-modal__close {
+  position: absolute;
+  top: 0.85rem;
+  right: 0.85rem;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 999px;
+  background: var(--color-bg);
+  color: var(--color-text);
+  cursor: pointer;
+}
+
+.service-modal__close:hover,
+.service-modal__close:focus-visible {
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+  outline: none;
+}
+
+.service-modal__icon {
+  width: 56px;
+  height: 56px;
+  background: var(--color-primary-soft);
+  border: 1px solid rgba(43, 61, 80, 0.12);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-primary);
+  margin-bottom: 1.25rem;
+}
+
+.service-modal__title {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  padding-right: 2.5rem;
+}
+
+.service-modal__body p {
+  color: var(--color-text-muted);
+  font-size: 0.9375rem;
+}
+
+.service-modal__benefits {
+  margin: 1.25rem 0 0;
+}
+
+.service-modal__benefits li {
+  position: relative;
+  padding-left: 1.25rem;
+  font-size: 0.9375rem;
+  color: var(--color-text);
+  margin-bottom: 0.5rem;
+}
+
+.service-modal__benefits li:last-child {
+  margin-bottom: 0;
+}
+
+.service-modal__benefits li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--color-success);
+  font-weight: 700;
+}
+
+@media (min-width: 640px) {
+  .service-modal {
+    align-items: center;
+    padding: 1.5rem;
+  }
+
+  .service-modal__dialog {
+    border-radius: var(--radius-lg);
+    padding: 2.25rem 2rem 2rem;
+    transform: translateY(16px) scale(0.98);
+  }
+
+  .service-modal.is-open .service-modal__dialog {
+    transform: translateY(0) scale(1);
+  }
 }
 
 /* ── Forms ── */
@@ -2418,7 +2683,8 @@ a.deal-card {
   transition-delay: 0s;
 }
 
-.services-grid--preview > .service-card[data-animate].is-visible:hover {
+.services-grid--preview > .service-card[data-animate].is-visible:hover,
+.services-grid:not(.services-grid--preview) > .service-card[data-animate].is-visible:hover {
   transform: translateY(-4px);
   box-shadow: var(--shadow-md);
   border-color: var(--color-primary-light);

@@ -1,6 +1,9 @@
 /**
  * Data nemovitostí – připraveno pro budoucí napojení na XML feed.
+ * Nastavte na false, až budou nemovitosti připravené k zobrazení.
  */
+const PROPERTIES_COMING_SOON = true;
+
 const PROPERTIES_DATA = {
   active: [
     {

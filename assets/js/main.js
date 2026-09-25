@@ -363,14 +363,21 @@
     render();
   }
 
+  const COMING_SOON_ACTIVE = '<p class="listing-empty">Nemovitosti budou brzy k dispozici. Právě na tom pracujeme.</p>';
+  const COMING_SOON_SOLD = '<p class="listing-empty">Přehled prodaných nemovitostí bude brzy k dispozici. Právě na tom pracujeme.</p>';
+
+  function propertiesComingSoon() {
+    return typeof PROPERTIES_COMING_SOON !== 'undefined' && PROPERTIES_COMING_SOON;
+  }
+
   /* Homepage – featured properties */
   const featuredContainer = document.getElementById('featured-properties');
   if (featuredContainer && typeof PROPERTIES_DATA !== 'undefined') {
     const limit = getPreviewLimit(featuredContainer) || 3;
-    const featured = PROPERTIES_DATA.active.slice(0, limit);
+    const featured = propertiesComingSoon() ? [] : PROPERTIES_DATA.active.slice(0, limit);
     featuredContainer.innerHTML = featured.length
       ? featured.map((p) => createListingCard(p)).join('')
-      : '<p class="listing-empty">Momentálně nemáme aktivní nabídku.</p>';
+      : COMING_SOON_ACTIVE;
     initPropertyCarousel(featuredContainer);
   }
 
@@ -378,9 +385,10 @@
   const soldPreview = document.getElementById('sold-preview');
   if (soldPreview && typeof PROPERTIES_DATA !== 'undefined') {
     const limit = getPreviewLimit(soldPreview) || 3;
-    soldPreview.innerHTML = PROPERTIES_DATA.sold.slice(0, limit).map((p) =>
-      createDealCard(p)
-    ).join('');
+    const sold = propertiesComingSoon() ? [] : PROPERTIES_DATA.sold.slice(0, limit);
+    soldPreview.innerHTML = sold.length
+      ? sold.map((p) => createDealCard(p)).join('')
+      : COMING_SOON_SOLD;
     initPropertyCarousel(soldPreview);
   }
 
@@ -394,9 +402,9 @@
   function renderListing() {
     if (!listingContainer || typeof PROPERTIES_DATA === 'undefined') return;
 
-    listingContainer.innerHTML = PROPERTIES_DATA.active.length
+    listingContainer.innerHTML = !propertiesComingSoon() && PROPERTIES_DATA.active.length
       ? PROPERTIES_DATA.active.map((p) => createListingCard(p)).join('')
-      : '<p class="listing-empty">Momentálně nemáme aktivní nabídku. Kontaktujte mě – rád vám pomohu najít vhodnou nemovitost.</p>';
+      : COMING_SOON_ACTIVE;
 
     listingContainer.querySelectorAll('[data-animate]').forEach((el) => {
       el.classList.add('is-visible');
@@ -406,9 +414,9 @@
   function renderSoldGallery() {
     if (!soldGallery || typeof PROPERTIES_DATA === 'undefined') return;
 
-    soldGallery.innerHTML = PROPERTIES_DATA.sold.length
+    soldGallery.innerHTML = !propertiesComingSoon() && PROPERTIES_DATA.sold.length
       ? PROPERTIES_DATA.sold.map((p) => createDealCard(p)).join('')
-      : '<p class="listing-empty">Zatím zde nejsou žádné prodané nemovitosti k zobrazení.</p>';
+      : COMING_SOON_SOLD;
 
     soldGallery.querySelectorAll('[data-animate]').forEach((el) => {
       el.classList.add('is-visible');

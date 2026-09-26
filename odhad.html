@@ -10,8 +10,8 @@
   <meta property="og:title" content="Odhad ceny nemovitosti zdarma | Zlín">
   <meta property="og:description" content="Nevíte, kolik dnes stojí vaše nemovitost? Získejte nezávazný odhad zdarma během několika minut.">
   <meta property="og:url" content="odhad.html">
-  <meta property="og:image" content="assets/images/agent.svg">
-  <meta name="twitter:card" content="summary_large_image">
+  <meta property="og:image" content="assets/images/og-card.png">
+  <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Odhad nemovitosti zdarma Zlín">
   <meta name="twitter:description" content="Nezávazný odhad ceny nemovitosti od realitního makléře ve Zlíně a okolí.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -106,27 +106,53 @@
 
               <div class="estimate-wizard-step">
                 <h3>Parametry nemovitosti</h3>
-                <label class="visually-hidden" for="estimate-disposition">Dispozice</label>
-                <select class="estimate-wizard-select" id="estimate-disposition">
-                  <option value="" disabled selected>Dispozice</option>
-                  <option value="1+kk">1+kk</option>
-                  <option value="1+1">1+1</option>
-                  <option value="2+kk">2+kk</option>
-                  <option value="2+1">2+1</option>
-                  <option value="3+kk">3+kk</option>
-                  <option value="3+1">3+1</option>
-                  <option value="4+kk">4+kk</option>
-                  <option value="4+1">4+1</option>
-                  <option value="5+kk">5+kk</option>
-                  <option value="5+1">5+1</option>
-                  <option value="Nevím">Nevím</option>
-                </select>
+                <div class="estimate-field-wrap" id="estimate-disposition-wrap">
+                  <label class="visually-hidden" for="estimate-disposition">Dispozice</label>
+                  <select class="estimate-wizard-select" id="estimate-disposition">
+                    <option value="" disabled selected>Dispozice</option>
+                    <option value="1+kk">1+kk</option>
+                    <option value="1+1">1+1</option>
+                    <option value="2+kk">2+kk</option>
+                    <option value="2+1">2+1</option>
+                    <option value="3+kk">3+kk</option>
+                    <option value="3+1">3+1</option>
+                    <option value="4+kk">4+kk</option>
+                    <option value="4+1">4+1</option>
+                    <option value="5+kk">5+kk</option>
+                    <option value="5+1">5+1</option>
+                    <option value="6 a více">6 a více</option>
+                    <option value="Nevím">Nevím</option>
+                  </select>
+                </div>
+                <div class="estimate-field-wrap" id="estimate-land-type-wrap" hidden>
+                  <label class="visually-hidden" for="estimate-land-type">Typ pozemku</label>
+                  <select class="estimate-wizard-select" id="estimate-land-type">
+                    <option value="" disabled selected>Typ pozemku</option>
+                    <option value="Stavební pozemek">Stavební pozemek</option>
+                    <option value="Zahrada">Zahrada</option>
+                    <option value="Orná půda">Orná půda</option>
+                    <option value="Ostatní / jiný">Ostatní / jiný</option>
+                    <option value="Nevím">Nevím</option>
+                  </select>
+                </div>
+                <div class="estimate-field-wrap" id="estimate-commercial-type-wrap" hidden>
+                  <label class="visually-hidden" for="estimate-commercial-type">Typ komerčního prostoru</label>
+                  <select class="estimate-wizard-select" id="estimate-commercial-type">
+                    <option value="" disabled selected>Typ prostoru</option>
+                    <option value="Kanceláře">Kanceláře</option>
+                    <option value="Obchod / prodejna">Obchod / prodejna</option>
+                    <option value="Sklad">Sklad</option>
+                    <option value="Výroba / provozovna">Výroba / provozovna</option>
+                    <option value="Jiné">Jiné</option>
+                    <option value="Nevím">Nevím</option>
+                  </select>
+                </div>
                 <label class="visually-hidden" for="estimate-area">Plocha v m²</label>
                 <input class="estimate-wizard-input" id="estimate-area" type="number" min="1" step="1" placeholder="Plocha (m²)" inputmode="numeric">
                 <p class="estimate-wizard-label">Druh vlastnictví</p>
                 <div class="estimate-wizard-radio-list">
                   <label><input type="radio" name="estimate-ownership" value="Osobní vlastnictví"> Osobní vlastnictví</label>
-                  <label><input type="radio" name="estimate-ownership" value="Družstevní vlastnictví"> Družstevní vlastnictví</label>
+                  <label id="estimate-ownership-coop"><input type="radio" name="estimate-ownership" value="Družstevní vlastnictví"> Družstevní vlastnictví</label>
                   <label><input type="radio" name="estimate-ownership" value="Jiné"> Jiné</label>
                   <label><input type="radio" name="estimate-ownership" value="Nevím"> Nevím</label>
                 </div>

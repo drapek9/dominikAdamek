@@ -114,9 +114,6 @@ function updatePageMeta(property, isSold) {
 
   meta = document.querySelector('meta[property="og:description"]');
   if (meta) meta.setAttribute('content', description);
-
-  meta = document.querySelector('meta[property="og:image"]');
-  if (meta && property.image) meta.setAttribute('content', property.image);
 }
 
 function renderNotFound() {

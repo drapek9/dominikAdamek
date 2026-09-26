@@ -401,6 +401,51 @@ body.nav-open { overflow: hidden; }
   padding: calc(var(--header-height) + 2rem) 0 4rem;
 }
 
+.hero--home {
+  isolation: isolate;
+  overflow: hidden;
+  padding: calc(var(--header-height) + 2.5rem) 0 4.5rem;
+}
+
+.hero__visual {
+  display: none;
+}
+
+.hero--home .hero__visual {
+  display: block;
+  position: absolute;
+  inset: 0 0 0 46%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.hero--home .hero__visual::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    #fff 0%,
+    rgba(255, 255, 255, 0.82) 12%,
+    rgba(255, 255, 255, 0.32) 26%,
+    transparent 42%
+  );
+}
+
+.hero__visual-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 68% 14%;
+  display: block;
+}
+
+.hero--home .hero__inner {
+  position: relative;
+  z-index: 1;
+  display: block;
+}
+
 .hero__inner {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -413,6 +458,10 @@ body.nav-open { overflow: hidden; }
   z-index: 1;
   text-align: left;
   color: var(--color-text);
+}
+
+.hero--home .hero__content {
+  max-width: min(34rem, 42vw);
 }
 
 .hero__partner {
@@ -451,6 +500,10 @@ body.nav-open { overflow: hidden; }
   max-width: 620px;
   margin: 0 0 2.5rem;
   line-height: 1.7;
+}
+
+.hero--home .hero__subtitle {
+  margin-bottom: 2rem;
 }
 
 .hero__cta {
@@ -2463,6 +2516,11 @@ body.service-modal-open .header {
   color: rgba(255, 255, 255, 0.65);
 }
 
+.estimate-field-wrap[hidden],
+.estimate-wizard-radio-list label[hidden] {
+  display: none;
+}
+
 .estimate-wizard-radio-list {
   display: grid;
   gap: 0.65rem;
@@ -2885,6 +2943,42 @@ body.service-modal-open .header {
   .hero__inner {
     grid-template-columns: 1fr;
     gap: 2.5rem;
+  }
+
+  .hero--home {
+    display: block;
+    min-height: 0;
+    padding: var(--header-height) 0 3rem;
+  }
+
+  .hero--home .hero__visual {
+    position: relative;
+    inset: auto;
+    height: min(78vw, 440px);
+    min-height: 340px;
+  }
+
+  .hero--home .hero__visual::after {
+    background: linear-gradient(
+      180deg,
+      transparent 38%,
+      rgba(255, 255, 255, 0.28) 68%,
+      #fff 100%
+    );
+  }
+
+  .hero__visual-img {
+    object-position: center 10%;
+  }
+
+  .hero--home .hero__inner {
+    grid-template-columns: 1fr;
+    margin-top: -2.5rem;
+  }
+
+  .hero--home .hero__content {
+    max-width: none;
+    text-align: center;
   }
 
   .hero__content {

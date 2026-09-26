@@ -477,6 +477,8 @@
       street: '',
       ownerRole: '',
       disposition: '',
+      landType: '',
+      commercialType: '',
       area: '',
       ownership: '',
       name: '',
@@ -486,8 +488,57 @@
       consent: false
     };
 
+    const typeRules = {
+      byt: { disposition: true, landType: false, commercialType: false, cooperative: true, areaPlaceholder: 'Plocha (m²)' },
+      'dům': { disposition: true, landType: false, commercialType: false, cooperative: false, areaPlaceholder: 'Plocha (m²)' },
+      pozemek: { disposition: false, landType: true, commercialType: false, cooperative: false, areaPlaceholder: 'Výměra pozemku (m²)' },
+      'komerční prostor': { disposition: false, landType: false, commercialType: true, cooperative: false, areaPlaceholder: 'Plocha (m²)' }
+    };
+
+    function toggleEstimateWrap(id, visible) {
+      const wrap = document.getElementById(id);
+      if (!wrap) return;
+      wrap.hidden = !visible;
+    }
+
+    function applyEstimateTypeFields() {
+      const rules = typeRules[data.type] || typeRules.byt;
+      const areaEl = document.getElementById('estimate-area');
+      const dispositionEl = document.getElementById('estimate-disposition');
+      const landTypeEl = document.getElementById('estimate-land-type');
+      const commercialTypeEl = document.getElementById('estimate-commercial-type');
+      const coopLabel = document.getElementById('estimate-ownership-coop');
+      const coopInput = coopLabel?.querySelector('input');
+
+      toggleEstimateWrap('estimate-disposition-wrap', rules.disposition);
+      toggleEstimateWrap('estimate-land-type-wrap', rules.landType);
+      toggleEstimateWrap('estimate-commercial-type-wrap', rules.commercialType);
+
+      if (areaEl) areaEl.placeholder = rules.areaPlaceholder;
+
+      if (!rules.disposition && dispositionEl) {
+        dispositionEl.selectedIndex = 0;
+        data.disposition = '';
+      }
+      if (!rules.landType && landTypeEl) {
+        landTypeEl.selectedIndex = 0;
+        data.landType = '';
+      }
+      if (!rules.commercialType && commercialTypeEl) {
+        commercialTypeEl.selectedIndex = 0;
+        data.commercialType = '';
+      }
+
+      if (coopLabel) coopLabel.hidden = !rules.cooperative;
+      if (!rules.cooperative && coopInput?.checked) {
+        coopInput.checked = false;
+        data.ownership = '';
+      }
+    }
+
     function setStep(index) {
       step = Math.max(0, Math.min(index, steps.length - 1));
+      if (step === 3) applyEstimateTypeFields();
       steps.forEach((s, idx) => s.classList.toggle('is-active', idx === step));
       if (progressBar) {
         progressBar.style.width = `${((step + 1) / steps.length) * 100}%`;
@@ -504,6 +555,7 @@
         formRoot.querySelectorAll('[data-estimate-choice]').forEach((b) => b.classList.remove('is-selected'));
         btn.classList.add('is-selected');
         data.type = btn.getAttribute('data-estimate-choice') || '';
+        applyEstimateTypeFields();
         setTimeout(() => setStep(1), 280);
       });
     });
@@ -532,16 +584,29 @@
     });
 
     document.getElementById('estimate-next-2')?.addEventListener('click', () => {
+      const rules = typeRules[data.type] || typeRules.byt;
       const dispositionEl = document.getElementById('estimate-disposition');
+      const landTypeEl = document.getElementById('estimate-land-type');
+      const commercialTypeEl = document.getElementById('estimate-commercial-type');
       const areaEl = document.getElementById('estimate-area');
       const ownershipSel = formRoot.querySelector('input[name="estimate-ownership"]:checked');
 
-      data.disposition = dispositionEl?.value || '';
+      data.disposition = rules.disposition ? (dispositionEl?.value || '') : '';
+      data.landType = rules.landType ? (landTypeEl?.value || '') : '';
+      data.commercialType = rules.commercialType ? (commercialTypeEl?.value || '') : '';
       data.area = areaEl?.value.trim() || '';
       data.ownership = ownershipSel?.value || '';
 
-      if (!data.disposition) {
+      if (rules.disposition && !data.disposition) {
         dispositionEl?.focus();
+        return;
+      }
+      if (rules.landType && !data.landType) {
+        landTypeEl?.focus();
+        return;
+      }
+      if (rules.commercialType && !data.commercialType) {
+        commercialTypeEl?.focus();
         return;
       }
       const areaNum = Number(data.area);

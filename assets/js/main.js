@@ -178,6 +178,59 @@
     counters.forEach((c) => counterObserver.observe(c));
   }
 
+  /* ── EmailJS ── */
+  const EMAILJS = {
+    publicKey: 'Y1pyYXS9XaF_TwXwa',
+    serviceId: 'service_pkir0ye',
+    templates: {
+      contact: 'template_19e3y5g',
+      estimate: 'template_bl0godj'
+    }
+  };
+
+  const CONTACT_SUBJECTS = {
+    konzultace: 'Konzultace',
+    prodej: 'Prodej nemovitosti',
+    odhad: 'Odhad ceny',
+    jine: 'Jiné'
+  };
+
+  function loadEmailJs() {
+    if (window.emailjs) {
+      window.emailjs.init({ publicKey: EMAILJS.publicKey });
+      return Promise.resolve(window.emailjs);
+    }
+    if (!loadEmailJs.promise) {
+      loadEmailJs.promise = new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        script.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js';
+        script.async = true;
+        script.onload = () => {
+          if (!window.emailjs) {
+            reject(new Error('EmailJS unavailable'));
+            return;
+          }
+          window.emailjs.init({ publicKey: EMAILJS.publicKey });
+          resolve(window.emailjs);
+        };
+        script.onerror = () => reject(new Error('EmailJS unavailable'));
+        document.head.appendChild(script);
+      });
+    }
+    return loadEmailJs.promise;
+  }
+
+  function sendEmail(templateId, params) {
+    return loadEmailJs().then((emailjs) => emailjs.send(EMAILJS.serviceId, templateId, params));
+  }
+
+  function showFormNotice(el, message, isError) {
+    if (!el) return;
+    el.hidden = false;
+    el.classList.toggle('form-success--error', isError);
+    el.textContent = message;
+  }
+
   /* ── Form validation ── */
   function validateForm(form) {
     let valid = true;
@@ -213,21 +266,30 @@
 
       const btn = form.querySelector('[type="submit"]');
       const originalText = btn.textContent;
+      const success = form.querySelector('.form-success');
+      const email = form.email.value.trim();
+      const subjectValue = form.subject?.value || '';
       btn.disabled = true;
       btn.textContent = 'Odesílám...';
+      if (success) success.hidden = true;
 
-      setTimeout(() => {
+      sendEmail(EMAILJS.templates.contact, {
+        from_name: form.name.value.trim(),
+        from_email: email,
+        reply_to: email,
+        phone: form.phone.value.trim() || '—',
+        subject: CONTACT_SUBJECTS[subjectValue] || subjectValue || 'Kontaktní formulář',
+        message: form.message.value.trim()
+      }).then(() => {
         form.reset();
         btn.disabled = false;
         btn.textContent = originalText;
-
-        const success = form.querySelector('.form-success');
-        if (success) {
-          success.hidden = false;
-          success.textContent = successMsg;
-          setTimeout(() => { success.hidden = true; }, 6000);
-        }
-      }, 1200);
+        showFormNotice(success, successMsg, false);
+      }).catch(() => {
+        btn.disabled = false;
+        btn.textContent = originalText;
+        showFormNotice(success, 'Zprávu se nepodařilo odeslat. Zkuste to prosím znovu, nebo mi zavolejte.', true);
+      });
     });
 
     form.querySelectorAll('[required]').forEach((field) => {
@@ -653,15 +715,53 @@
         submitBtn.textContent = 'Odesílám...';
       }
 
-      setTimeout(() => {
+      const details = [
+        `Typ nemovitosti: ${data.type}`,
+        `Město: ${data.city}`,
+        `Ulice: ${data.street}`,
+        `Vztah k nemovitosti: ${data.ownerRole}`,
+        data.disposition ? `Dispozice: ${data.disposition}` : '',
+        data.landType ? `Typ pozemku: ${data.landType}` : '',
+        data.commercialType ? `Typ prostoru: ${data.commercialType}` : '',
+        `Plocha: ${data.area} m²`,
+        `Vlastnictví: ${data.ownership}`,
+        data.message ? `Zpráva: ${data.message}` : ''
+      ].filter(Boolean).join('\n');
+
+      sendEmail(EMAILJS.templates.estimate, {
+        from_name: data.name,
+        from_email: data.email,
+        reply_to: data.email,
+        phone: data.phone,
+        property_type: data.type,
+        city: data.city,
+        street: data.street,
+        owner_role: data.ownerRole,
+        disposition: data.disposition || '—',
+        land_type: data.landType || '—',
+        commercial_type: data.commercialType || '—',
+        area: data.area,
+        ownership: data.ownership,
+        message: details
+      }).then(() => {
         formRoot.hidden = true;
         if (successEl) {
           successEl.hidden = false;
+          successEl.classList.remove('form-success--error');
+          successEl.textContent = 'Děkuji! Brzy vás budu kontaktovat s odhadem ceny vaší nemovitosti.';
         }
         if (feedback) {
           feedback.innerHTML = '<strong>Děkuji.</strong> Ozvu se co nejdříve s nezávazným odhadem.';
         }
-      }, 600);
+      }).catch(() => {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Odeslat nezávazně';
+        }
+        if (successEl) {
+          showFormNotice(successEl, 'Poptávku se nepodařilo odeslat. Zkuste to prosím znovu, nebo mi zavolejte.', true);
+        }
+      });
     });
 
     setStep(0);

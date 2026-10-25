@@ -1963,6 +1963,11 @@ body.service-modal-open .header {
   margin-bottom: 1.25rem;
 }
 
+.form-success--error {
+  background: #fdecec;
+  color: #9b2c2c;
+}
+
 .form-card {
   background: var(--color-white);
   border-radius: var(--radius-xl);
